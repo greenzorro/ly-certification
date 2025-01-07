@@ -1,6 +1,6 @@
 /*
- * File: ly-exam.js
- * Project: ly-exam
+ * File: ly-certification.js
+ * Project: ly-certification
  * Created: 2025-01-03 10:39:28
  * Author: Victor Cheng
  * Email: greenzorromail@gmail.com
