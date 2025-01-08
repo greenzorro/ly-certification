@@ -159,7 +159,8 @@
             const csvContent = '\ufeff' + csvRows.join('\n'); // 添加BOM标记以支持中文
 
             // 下载CSV文件
-            const timestamp = new Date().toISOString()
+            const now = new Date(new Date().getTime() + 8 * 60 * 60 * 1000); // 转换为北京时间
+            const timestamp = now.toISOString()
                 .replace(/[-:]/g, '')
                 .replace(/T/, '_')
                 .replace(/\..+/, '');
