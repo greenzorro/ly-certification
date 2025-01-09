@@ -55,9 +55,9 @@ if dfs:
 
     for _, row in incorrect_df.iterrows():
         markdown_content.append(f"## \[{row['题型']}\] {row['题干']}\n")  # 这些作为二级标题
-        markdown_content.append(f"{row['选项']}\n")
-        markdown_content.append(f"正确答案：{row['正确答案']}  ")
-        markdown_content.append(f"我的答案：{row['我的答案']}\n")
+        options = row['选项'].replace(' | ', '  \n')
+        markdown_content.append(f"{options}\n")
+        markdown_content.append(f"正确答案：{row['正确答案']}\n")
         markdown_content.append(f"题目解析：  \n{row['题目解析']}\n")
         markdown_content.append("---\n")
 

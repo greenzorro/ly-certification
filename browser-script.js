@@ -25,7 +25,7 @@
 // ==UserScript==
 // @name         瓴羊刷题助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.0.1
 // @description  导出瓴羊考试答题记录
 // @author       Victor Cheng
 // @match        https://cert.lydaas.com/cert-ly-online/exam/test*
