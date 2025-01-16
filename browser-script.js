@@ -25,7 +25,7 @@
 // ==UserScript==
 // @name         瓴羊刷题助手
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.0.2
 // @description  导出瓴羊考试答题记录
 // @author       Victor Cheng
 // @match        https://cert.lydaas.com/cert-ly-online/exam/test*
@@ -35,6 +35,33 @@
 
 (function() {
     'use strict';
+
+    // 添加键盘事件监听
+    document.addEventListener('keydown', (event) => {
+        console.log('键盘事件触发:', event.code);
+        
+        // 检查是否按下空格键且不是在输入框中
+        if (event.code === 'Space' && 
+            !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+            // 阻止默认的空格滚动行为
+            event.preventDefault();
+            
+            // 查找并点击下一题按钮
+            const nextButton = document.querySelector('[class^="ant-btn _next"]');
+            console.log('找到下一题按钮:', nextButton);
+            
+            if (nextButton) {
+                console.log('点击下一题按钮');
+                nextButton.click();
+            } else {
+                console.log('没有找到下一题按钮，可能的class名:', 
+                    Array.from(document.querySelectorAll('button'))
+                        .map(btn => btn.className)
+                        .join(', ')
+                );
+            }
+        }
+    });
 
     // 创建悬浮按钮
     const floatingButton = document.createElement('button');
