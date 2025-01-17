@@ -1,7 +1,7 @@
 '''
-File: incorrect.py
-Project: ly-exam
-Created: 2025-01-03 12:08:08
+File: run.py
+Project: ly-certification
+Created: 2025-01-09 02:58:19
 Author: Victor Cheng
 Email: greenzorromail@gmail.com
 Description: 
@@ -78,7 +78,7 @@ def analyze_question_bank_size(csv_files, records_dir):
 
     :param list[str] csv_files: 考试文件列表
     :param str records_dir: 考试记录存储目录路径
-    :return list[pd.DataFrame] | None: 所有考试数据的列表，如果无法分析则返回None
+    :return tuple[list[pd.DataFrame], float, int] | None: 包含所有考试数据列表、覆盖率和估算题库总量的元组，如果无法分析则返回None
     """
     if len(csv_files) < 2:
         return None
@@ -144,9 +144,11 @@ def analyze_question_bank_size(csv_files, records_dir):
     total_seen = len(all_questions)
     total_incorrect = len(incorrect_questions)
     
+    coverage_rate = total_seen/int(avg_estimation)
+    
     print("\n结论:")
     print(f"整个题库大约有 {int(avg_estimation)} 道题")
-    print(f"目前已刷到 {total_seen} 道不同的题 ({total_seen/int(avg_estimation)*100:.1f}%)")
+    print(f"目前已刷到 {total_seen} 道不同的题 (覆盖率{coverage_rate*100:.1f}%)")
     print(f"其中错题集积累了 {total_incorrect} 道题 (错误率{total_incorrect/total_seen*100:.1f}%)")
     
     # 检查估算值的离散程度
@@ -158,7 +160,7 @@ def analyze_question_bank_size(csv_files, records_dir):
         print("3. 样本量可能不够大")
         print(f"4. 最大偏差为 {max_deviation:.1f} 个标准差")
 
-    return file_dfs  # 返回读取的数据框列表
+    return file_dfs, coverage_rate, int(avg_estimation)  # 返回数据框列表、覆盖率和估算总量
 
 def format_questions_to_markdown(df: pd.DataFrame, title: str) -> str:
     """将题目数据格式化为markdown格式
@@ -220,7 +222,7 @@ def export_question_bank_pdf(content: str, downloads_dir: str) -> None:
     # 删除临时markdown文件
     os.remove(temp_markdown_path)
     
-    print(f"\n题库已生成: {pdf_path}")
+    print(f"题库已生成: {pdf_path}")
 
 def get_incorrect_questions(csv_files, records_dir):
     """获取所有错题
@@ -277,12 +279,16 @@ def main() -> None:
     csv_files = get_sorted_exam_files(records_dir)
     if len(csv_files) >= 2:
         # 进行多次估算并计算平均值
-        file_dfs = analyze_question_bank_size(csv_files, records_dir)
+        result = analyze_question_bank_size(csv_files, records_dir)
         
-        if file_dfs:
-            # 生成题库PDF
-            content = get_all_unique_questions(file_dfs)
-            export_question_bank_pdf(content, downloads_dir)
+        if result:
+            file_dfs, coverage_rate, total_questions = result
+            
+            # 只有当覆盖率达到90%时才生成题库PDF
+            if coverage_rate > 0.9:
+                print(f"\n题库覆盖率已达到 {coverage_rate*100:.1f}%，超过90%，开始生成题库...")
+                content = get_all_unique_questions(file_dfs)
+                export_question_bank_pdf(content, downloads_dir)
             
             # 处理错题并生成PDF
             incorrect_df = get_incorrect_questions(csv_files, records_dir)
