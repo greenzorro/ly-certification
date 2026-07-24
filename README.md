@@ -22,3 +22,42 @@
 ---
 
 由 [Victor_42](https://victor42.work/) 创造
+
+# For Agent
+
+Two halves: (1) a Tampermonkey script on the Lydaas certification exam site to export questions, (2) a local Python job to merge exports into a wrong-question PDF. Install/verify both, run one end-to-end pass if data exists, then hand studying to the human.
+
+## Prerequisites
+
+- Browser + Tampermonkey for `https://cert.lydaas.com/cert-ly-online/exam/test*`
+- Python 3 with `pandas` and `markdown_pdf` (install if missing)
+- Human access to the certification site (login / exam session)
+
+## Steps
+
+### A. Browser export
+
+1. Install `browser-script.js` via Tampermonkey (or the GreasyFork link in this README).
+2. **One handoff:** human logs into [瓴羊认证](https://cert.lydaas.com/cert-ly-online/certification), opens a practice/exam result page that matches `@match`.
+3. Use the script to export the question table (CSV named like `ly_exam_*.csv` into the system Downloads folder) and confirm Space advances questions on the answering UI if that feature is in scope.
+4. Stop browser automation once a CSV is on disk.
+
+### B. Local Python
+
+1. From the repo root, ensure deps are installed, then:
+   ```bash
+   python run.py
+   ```
+2. The script moves `ly_exam_*.csv` from `~/Downloads` into `records/`, merges/dedupes, estimates bank size when enough exams exist, and builds a PDF wrong-question pack.
+3. Verify new files under `records/` and any generated PDF. Then stop.
+
+## Hand off to the human
+
+- Taking exams / studying from the PDF
+- Site login and any anti-bot challenges
+
+## Red lines
+
+- Do not bypass exam integrity controls or share answer keys publicly as “automation”
+- Do not commit personal exam CSVs or PDFs with private data
+- Keep `@match` on the Lydaas exam hosts above
