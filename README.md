@@ -1,23 +1,19 @@
 # ly-certification 瓴羊刷题助手
 
+请让 Agent 按文末 `# For Agent` 安装油猴脚本与本地 Python 工具。你负责登录答题、导出后复习 PDF。
+
 项目包含两个部分：
 
-## 油猴脚本
+## 油猴脚本（装好后你怎么用）
 
-[⏬ 油猴脚本](https://greasyfork.org/en/scripts/522657-%E7%93%B4%E7%BE%8A%E5%88%B7%E9%A2%98%E5%8A%A9%E6%89%8B)
-
-- 从 [瓴羊认证](https://cert.lydaas.com/cert-ly-online/certification) 模拟考的考试结果页面导出所有试题，保存为表格文件，以供错题记录和分析。
-- 答题页面，空格键切换下一题。
+- 在 [瓴羊认证](https://cert.lydaas.com/cert-ly-online/certification) 模拟考**结果页**导出全部试题为表格，方便错题记录与分析。
+- 答题页可用**空格键**切下一题。
 
 操作演示：[Youtube](https://youtu.be/cj5g2tmWmlg) | [Bilibili](https://www.bilibili.com/video/BV1ng61YNEFw/?share_source=copy_web&vd_source=f798a3fc4cecc541856bed48b800e237)
 
-## 本地脚本
+## 本地整理（装好后你得到什么）
 
-.py文件在本地运行：
-
-- 把油猴脚本导出的考试记录合并整理，整合成PDF错题集，方便复习。
-- 根据已有的刷题记录估算整个题库试题数量。
-- 积累的题足够多时，可以（近似）生成整个题库。
+Agent 跑本地脚本后，会把多次导出的考试记录合并成 PDF 错题集，并在记录足够时估算/逼近题库规模——方便你复习，而不是再手搓表格。
 
 ---
 
@@ -37,7 +33,7 @@ Two halves: (1) a Tampermonkey script on the Lydaas certification exam site to e
 
 ### A. Browser export
 
-1. Install `browser-script.js` via Tampermonkey (or the GreasyFork link in this README).
+1. Install `browser-script.js` via Tampermonkey, or https://greasyfork.org/en/scripts/522657-%E7%93%B4%E7%BE%8A%E5%88%B7%E9%A2%98%E5%8A%A9%E6%89%8B
 2. **One handoff:** human logs into [瓴羊认证](https://cert.lydaas.com/cert-ly-online/certification), opens a practice/exam result page that matches `@match`.
 3. Use the script to export the question table (CSV named like `ly_exam_*.csv` into the system Downloads folder) and confirm Space advances questions on the answering UI if that feature is in scope.
 4. Stop browser automation once a CSV is on disk.
