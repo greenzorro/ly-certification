@@ -4,6 +4,8 @@
 
 ## 油猴脚本
 
+[⏬ 油猴脚本](https://greasyfork.org/en/scripts/522657-%E7%93%B4%E7%BE%8A%E5%88%B7%E9%A2%98%E5%8A%A9%E6%89%8B)
+
 - 在 [瓴羊认证](https://cert.lydaas.com/cert-ly-online/certification) 模拟考**结果页**导出全部试题为表格，方便错题记录与分析。
 - 答题页可用**空格键**切下一题。
 
