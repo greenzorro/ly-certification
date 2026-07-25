@@ -17,7 +17,7 @@ Agent 跑本地脚本后，会把多次导出的考试记录合并成 PDF 错题
 
 ---
 
-由 [Victor_42](https://victor42.work/) 创造
+由 [Victor42](https://victor42.work/) 创造
 
 ---
 
